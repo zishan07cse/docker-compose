@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  database:
+    image: zishan07/finance_app-database:latest  # Pull image from Docker Hub
+    ports:
+      - "3306:3306"  # Exposing MySQL port
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_database
+
+  backend:
+    image: zishan07/finance_app-backend:latest  # Pull image from Docker Hub
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database  # Wait for the database to start
+
+  frontend:
+    image: zishan07/finance_app-frontend:latest  # Pull image from Docker Hub
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend  # Wait for the backend to start
